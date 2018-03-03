@@ -21,16 +21,14 @@ Player::Player() {
 
 /* Constructor:
  */
-Player::Player(int x, int y) {
+Player::Player(int id, int x, int y) {
   posx = x;
   posy = y;
+  ID = id;
   std::string inname = "";
-  int rand = clock() % 14;
-  // sets player id as a combination of x and y coordinates
-  std::stringstream IDCreate;
-  IDCreate << x << 0 << y;
-  IDCreate >> ID;
+
   // totally useless but fun naming system
+  int rand = clock() % 14;
   std::ifstream fin;
   fin.open("Names.txt");
   for (int i = 0; i <= rand; i++) {
@@ -48,3 +46,5 @@ int Player::returnY() { return posy; }
 int Player::returnID() { return ID; }
 
 std::string Player::returnName() { return name; }
+
+void Player::setID(int id) { ID = id; }

@@ -23,6 +23,7 @@ Board::Board(int bS) {
   boardSize = bS;
   numberOfPlayers = 0;
 }
+
 /*Insert method in the Board class that will allow you to add a new player
 to the board.  The method should take as input the player ID to be inserted
 along with a desired (x,y) position into which it is to be initially placed.
@@ -33,7 +34,18 @@ total number of players with this insertion should not exceed m. If
 successful, the method should update n and return true. If insertion fails,
  the code should display an error message and return false without changing
 anything*/
-bool Board::Insert(int p) {
+bool Board::Insert(int x, int y) {
+  int id;
+  // sets player id as a combination of x and y coordinates
+  std::stringstream IDCreate;
+  IDCreate << x << 0 << y;
+  IDCreate >> id;
+  Player.setID(id);
+  MBoard.insert();
+  return true;
+}
+
+bool Board::Insert(int p, int x, int y) {
   MBoard.insert();
   return true;
 }

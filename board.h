@@ -24,8 +24,9 @@ public:
   successful, the method should update n and return true. If insertion fails,
    the code should display an error message and return false without changing
     anything*/
-  bool Insert(int p);
+  bool Insert(int x, int y);
 
+  bool Insert(int p, int x, int y);
   /*Implement  a  Remove  method  in  the  Board  class  that  will  allow
     you  to remove  a  player  from  the  board.  The  method  should  take
     as  input  the player ID to be removed, and should return true upon

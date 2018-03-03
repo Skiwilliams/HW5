@@ -23,7 +23,7 @@ public:
 
   /* Constructor: the not empty one
    */
-  Player(int x, int y);
+  Player(int id, int x, int y);
 
   int returnID();
 
@@ -34,6 +34,8 @@ public:
 
   /*Passes a copy of the y coordinate*/
   int returnY();
+
+  void setID(int id);
 
 private:
   int ID;
