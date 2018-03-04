@@ -17,6 +17,8 @@ Player::Player() {
   posx = 0;
   posy = 0;
   name = "Regie";
+  coordUpdate();
+  vanityName();
 }
 
 /* Constructor:
@@ -25,9 +27,13 @@ Player::Player(int id, int x, int y) {
   posx = x;
   posy = y;
   ID = id;
-  std::string inname = "";
+  coordUpdate();
+  vanityName();
+}
 
-  // totally useless but fun naming system
+// gives players usless but fun names
+void Player::vanityName() {
+  std::string inname = "";
   int rand = clock() % 14;
   std::ifstream fin;
   fin.open("Names.txt");
@@ -35,6 +41,14 @@ Player::Player(int id, int x, int y) {
     std::getline(fin, inname);
   }
   name = inname;
+}
+
+// coordinate naming system
+void Player::coordUpdate() {
+  SID = "";
+  std::stringstream ID;
+  ID << "x, " << posx << "y, " << posy;
+  ID >> SID;
 }
 
 /*Passes a copy of the x coordinate*/

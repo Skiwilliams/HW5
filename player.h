@@ -29,6 +29,9 @@ public:
 
   std::string returnName();
 
+  void coordUpdate();
+  void vanityName();
+
   /*Passes a copy of the x coordinate*/
   int returnX();
 

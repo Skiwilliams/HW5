@@ -42,6 +42,9 @@ bool Board::Insert(int x, int y) {
   return true;
 }
 
+/*
+
+*/
 bool Board::Insert(int p, int x, int y) {
   MBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
   return true;
