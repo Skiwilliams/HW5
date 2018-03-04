@@ -46,5 +46,3 @@ int Player::returnY() { return posy; }
 int Player::returnID() { return ID; }
 
 std::string Player::returnName() { return name; }
-
-void Player::setID(int id) { ID = id; }

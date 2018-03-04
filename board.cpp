@@ -4,13 +4,11 @@
 #include "board.h"
 #include "player.h"
 #include <iostream>
-#include <map>
 
 /* Constructor: Default
  default board size: 10X10
  */
 Board::Board() {
-  std::map<int, Player> MBoard;
   boardSize = 10;
   numberOfPlayers = 0;
 }
@@ -40,13 +38,12 @@ bool Board::Insert(int x, int y) {
   std::stringstream IDCreate;
   IDCreate << x << 0 << y;
   IDCreate >> id;
-  Player.setID(id);
-  MBoard.insert();
+  MBoard.insert(std::pair<int, Player>(id, Player(id, x, y)));
   return true;
 }
 
 bool Board::Insert(int p, int x, int y) {
-  MBoard.insert();
+  MBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
   return true;
 }
 

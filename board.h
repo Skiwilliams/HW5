@@ -6,6 +6,10 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
+#include "player.h"
+#include <cstdlib>
+#include <map>
+
 class Board {
 
 public:
@@ -66,6 +70,7 @@ false
   void PrintByID();
 
 private:
+  std::map<int, Player> MBoard;
   int boardSize;
   int numberOfPlayers;
 };
