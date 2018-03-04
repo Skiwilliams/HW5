@@ -8,7 +8,13 @@
 
 #include "player.h"
 #include <cstdlib>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <istream>
 #include <map>
+#include <sstream>
+#include <string>
 
 class Board {
 
@@ -39,6 +45,12 @@ public:
     upon  successful  removal,  the corresponding  cell  on  the  board
     should  become  available  for  newer insertions.
 */
+  int totePlayers();
+
+  std::string intPairToSearchString(int x, int y);
+
+  bool coordEmpty(int x, int y);
+
   bool Remove();
 
   /*Find  method  in  the  Board  class  that  is  given  a  player  ID
@@ -70,10 +82,11 @@ false
   void PrintByID();
 
 private:
-  std::map<int, Player> MBoard;
-  std::map<std::string, std::map<int, Player>::iterator> CoordBoard;
+  std::map<int, Player> idBoard;
+  std::map<std::string, std::map<int, Player>::iterator> coordBoard;
   int boardSize;
   int numberOfPlayers;
+  int tote;
 };
 
 #endif

@@ -47,7 +47,7 @@ void Player::vanityName() {
 void Player::coordUpdate() {
   SID = "";
   std::stringstream ID;
-  ID << "x, " << posx << "y, " << posy;
+  ID << "x " << posx << ",y " << posy;
   ID >> SID;
 }
 

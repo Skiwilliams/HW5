@@ -25,12 +25,13 @@ public:
    */
   Player(int id, int x, int y);
 
+  void coordUpdate();
+
+  void vanityName();
+
   int returnID();
 
   std::string returnName();
-
-  void coordUpdate();
-  void vanityName();
 
   /*Passes a copy of the x coordinate*/
   int returnX();
