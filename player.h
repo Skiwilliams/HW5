@@ -25,6 +25,10 @@ public:
    */
   Player(int id, int x, int y);
 
+  void coordUpdate();
+
+  void vanityName();
+
   int returnID();
 
   std::string returnName();
@@ -36,6 +40,7 @@ public:
   int returnY();
 
 private:
+  std::string SID;
   int ID;
   std::string name;
   int posx;

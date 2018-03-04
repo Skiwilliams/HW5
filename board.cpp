@@ -2,7 +2,6 @@
  * Board.cpp
  */
 #include "board.h"
-#include "player.h"
 #include <iostream>
 
 /* Constructor: Default
@@ -11,15 +10,17 @@
 Board::Board() {
   boardSize = 10;
   numberOfPlayers = 0;
+  tote = 0;
 }
 
 /* Constructor: Default
    takes 10 players by if none given
  */
 Board::Board(int bS) {
-  std::map<int, Player> MBoard;
+  std::map<int, Player> idBoard;
   boardSize = bS;
   numberOfPlayers = 0;
+  tote = 0;
 }
 
 /*Insert method in the Board class that will allow you to add a new player
@@ -34,17 +35,50 @@ Board::Board(int bS) {
    anything*/
 bool Board::Insert(int x, int y) {
   int id;
+  std::string searchString = intPairToSearchString(x, y);
   // sets player id as a combination of x and y coordinates
-  std::stringstream IDCreate;
-  IDCreate << x << 0 << y;
-  IDCreate >> id;
-  MBoard.insert(std::pair<int, Player>(id, Player(id, x, y)));
+  id = totePlayers();
+  if (coordEmpty(x, y)) {
+
+    tote++; // incrementing total players who have played on boardSize
+
+    // inserting new player in idBoard and storing return info from insert
+    // operation in pair insertInfo
+    std::pair<std::map<int, Player>::iterator, bool> insertInfo =
+        idBoard.insert(std::pair<int, Player>(id, Player(id, x, y)));
+
+    // inserting new pair in to coordBoard, pair consists of searchable xy
+    // string  and iterator to new player stored in idBoard
+    coordBoard.insert(std::pair<std::string, std::map<int, Player>::iterator>(
+        searchString, insertInfo.first));
+    return true;
+  }
+  return false;
+}
+
+int Board::totePlayers() { return tote; }
+
+/*
+
+ */
+bool Board::Insert(int p, int x, int y) {
+  idBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
   return true;
 }
 
-bool Board::Insert(int p, int x, int y) {
-  MBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
-  return true;
+std::string Board::intPairToSearchString(int x, int y) {
+  std::stringstream idCreate;
+  idCreate << "x " << x << ",y " << y;
+  return idCreate.str();
+}
+
+bool Board::coordEmpty(int x, int y) {
+  std::string searchString = intPairToSearchString(x, y);
+  if (coordBoard.find(searchString.c_str()) == coordBoard.end()) {
+    return true;
+  }
+  std::cout << "no space at: " << searchString.c_str() << std::endl;
+  return false;
 }
 
 /*Implement  a  Remove  method  in  the  Board  class  that  will  allow
