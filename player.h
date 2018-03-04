@@ -36,6 +36,7 @@ public:
   int returnY();
 
 private:
+  std::string SID;
   int ID;
   std::string name;
   int posx;

@@ -71,6 +71,7 @@ false
 
 private:
   std::map<int, Player> MBoard;
+  std::map<std::string, std::map<int, Player>::iterator> CoordBoard;
   int boardSize;
   int numberOfPlayers;
 };
