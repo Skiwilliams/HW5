@@ -35,8 +35,6 @@ public:
   /*Passes a copy of the y coordinate*/
   int returnY();
 
-  void setID(int id);
-
 private:
   int ID;
   std::string name;
