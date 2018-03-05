@@ -34,7 +34,7 @@ Player::Player(int id, int x, int y) {
 // gives players usless but fun names
 void Player::vanityName() {
   std::string inname = "";
-  int rand = clock() % 14;
+  int rand = clock() % 21;
   std::ifstream fin;
   fin.open("Names.txt");
   for (int i = 0; i <= rand; i++) {
@@ -50,7 +50,7 @@ void Player::coordUpdate(int newX, int newY) {
   SID = "";
   std::stringstream ID;
   ID << "x " << posx << ",y " << posy;
-  ID >> SID;
+  SID = ID.str();
 }
 
 /*Passes a copy of the x coordinate*/

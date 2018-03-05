@@ -3,37 +3,60 @@
  * Board.h
  *
  */
+
 #include "board.h"
 
 int main() {
-  Board myboard;
+  Board B(10); // specifies that the game board size is 1000000 x 1000000
 
-  myboard.Insert(2, 3);
-  myboard.Insert(2, 4);
-  myboard.Insert(9, 9);
+  // the following is a sequence of calls to Board class methods assuming
+  // 	the input example (m=10,n=8) given in the programming assignment.
 
-  myboard.printByID();
-  if (myboard.find(0)) {
-    std::cout << "found 0" << std::endl;
-  }
-  // if (myboard.remove(2)) {
-  // std::cout << "removed 2" << std::endl;
-  //}
-  if (myboard.find(1)) {
-    std::cout << "found 1" << std::endl;
-  }
+  B.Insert(1, 3, 2); // assumed syntax: Insert(ID, x, y)
+  B.Insert(2, 4, 3);
+  B.Insert(3, 4, 6);
+  B.Insert(4, 5, 7);
+  B.Insert(5, 6, 3);
+  B.Insert(6, 8, 2);
+  B.Insert(7, 9, 3);
+  B.Insert(8, 9, 8);
 
-  if (myboard.moveTo(0, 2, 4)) {
-    std::cout << "moved 0 to 1" << std::endl;
-  }
+  B.Insert(3, 7, 6); // should fail because player 3 is already there
 
-  myboard.printByID();
+  B.Insert(10, 9, 8); // should fail because 9,8 is occupied already
 
-  if (myboard.moveTo(0, 9, 9)) {
-    std::cout << "moved 0 to tintin" << std::endl;
-  }
+  B.moveTo(4, 9,
+           3); // assumed syntax: moveTo(ID,x,y) // removes 7 in the process
+  B.printByVan();
 
-  myboard.printByID();
+  B.moveTo(4, 9, 11); // removes 8
+  B.printByVan();
 
-  return 0;
+  B.moveTo(4, 6, 3); // should fail because move to 6,3 is from 4's current
+                     // position is not valid
+  B.printByVan();
+
+  B.moveTo(2, 3, 3);
+  B.printByVan();
+
+  B.moveTo(4, 3, 2); // removes 1
+  B.printByVan();
+
+  B.moveTo(4, 8, 2); // removes 6
+  B.printByVan();
+
+  B.moveTo(5, 3, 3); // removes 2
+  B.printByVan();
+
+  B.moveTo(4, 4, 6); // removes 3
+  B.printByVan();
+
+  B.moveTo(5, 4, 3);
+  B.printByVan();
+
+  B.moveTo(4, 4, 3); // removes 5
+  B.printByVan();
+
+  // the code should print only one player at this stage which is player 4 @
+  // (4,3)
 }

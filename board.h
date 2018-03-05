@@ -7,6 +7,7 @@
 #define __BOARD_H__
 
 #include "player.h"
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -34,9 +35,8 @@ public:
   successful, the method should update n and return true. If insertion fails,
    the code should display an error message and return false without changing
     anything*/
-  bool Insert(int x, int y);
 
-  bool Insert(int p, int x, int y);
+  bool Insert(int id, int x, int y);
   /*Implement  a  Remove  method  in  the  Board  class  that  will  allow
     you  to remove  a  player  from  the  board.  The  method  should  take
     as  input  the player ID to be removed, and should return true upon
@@ -45,7 +45,6 @@ public:
     upon  successful  removal,  the corresponding  cell  on  the  board
     should  become  available  for  newer insertions.
 */
-  int totePlayers();
 
   std::string intPairToSearchString(int x, int y);
 
@@ -82,6 +81,10 @@ false
      the print should not display any unoccupied positions.
 */
   void printByID();
+  void printByVan();
+
+  bool checkBounds(int x, int y);
+  bool checkValidMove(int x1, int y1, int x2, int y2);
 
   void printFancy();
 
@@ -90,7 +93,6 @@ private:
   std::map<std::string, std::map<int, Player>::iterator> coordBoard;
   int boardSize;
   int numberOfPlayers;
-  int tote;
 };
 
 #endif
