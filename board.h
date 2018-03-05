@@ -1,5 +1,5 @@
 /*
- *Cullen Williams
+ *Cullen Williams & Garrick Hutcheson
  * Board.h
  */
 
@@ -51,12 +51,14 @@ public:
 
   bool coordEmpty(int x, int y);
 
-  bool Remove();
+  bool remove(int ID);
+
+  bool removeByCoord(int x, int y);
 
   /*Find  method  in  the  Board  class  that  is  given  a  player  ID
 and returns true if the player is found and false otherwise.
 */
-  bool Find(int ID);
+  bool find(int ID);
 
   /*MoveTo
   takes as input a player ID and a destination (x2,y2) cell position.
@@ -73,13 +75,15 @@ method should print a message to indicate which player was removed. prints when
 player eliminated Returns True on successfull move or displays error and returns
 false
 */
-  bool MoveTo(int ID, int xto, int yto);
+  bool moveTo(int ID, int xto, int yto);
 
   /* PrintByID method in the Board class that prints all the player IDs along
      with their (x,y) positions, in the increasing order of their IDs. Again,
      the print should not display any unoccupied positions.
 */
-  void PrintByID();
+  void printByID();
+
+  void printFancy();
 
 private:
   std::map<int, Player> idBoard;

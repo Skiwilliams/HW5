@@ -1,4 +1,5 @@
-/*Cullen Williams
+/*
+ * Cullen Williams & Garrick Hutcheson
  * Board.cpp
  */
 #include "board.h"
@@ -51,6 +52,7 @@ bool Board::Insert(int x, int y) {
     // string  and iterator to new player stored in idBoard
     coordBoard.insert(std::pair<std::string, std::map<int, Player>::iterator>(
         searchString, insertInfo.first));
+    numberOfPlayers++;
     return true;
   }
   return false;
@@ -60,11 +62,13 @@ int Board::totePlayers() { return tote; }
 
 /*
 
- */
 bool Board::Insert(int p, int x, int y) {
-  idBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
-  return true;
+    idBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
+    numberOfPlayers++;
+    tote++;
+    return true;
 }
+*/
 
 std::string Board::intPairToSearchString(int x, int y) {
   std::stringstream idCreate;
@@ -89,14 +93,43 @@ bool Board::coordEmpty(int x, int y) {
    upon  successful  removal,  the corresponding  cell  on  the  board
    should  become  available  for  newer insertions.
  */
-bool Board::Remove() { return false; }
+bool Board::remove(int i) {
+  if (find(i)) {
+    std::map<int, Player>::iterator toDel;
+    toDel = idBoard.find(i);
+    // delete from coordmap
+    coordBoard.erase(toDel->second.getSID());
+    // deletefrom idmap
+    idBoard.erase(i);
+    std::cout << "Player " << i << " removed" << std::endl;
+    numberOfPlayers--;
+    return true;
+  }
+  std::cout << "Player not found" << std::endl;
+  return false;
+}
+
+bool Board::removeByCoord(int x, int y) {
+  std::string moveSID = intPairToSearchString(x, y);
+
+  std::map<std::string, std::map<int, Player>::iterator>::iterator
+      coordBoardItr = coordBoard.find(moveSID);
+  if (coordBoardItr != coordBoard.end()) // player at new space
+  {
+    idBoard.erase(coordBoardItr->second);
+    coordBoard.erase(coordBoardItr);
+    numberOfPlayers--;
+    return true;
+  }
+
+  return false;
+}
 
 /*Find  method  in  the  Board  class  that  is  given  a  player  ID
    and returns true if the player is found and false otherwise.
  */
-bool Board::Find(int ID) {
-  // uses map to locate player by ID
-  return false;
+bool Board::find(int ID) {
+  return (idBoard.find(ID) == idBoard.end()) ? (false) : (true);
 }
 
 /*MoveTo
@@ -115,16 +148,31 @@ bool Board::Find(int ID) {
    Note: Any player(s) on the board along the path of moving from (x1,y1) to
    (x2,y2) is/are left unaffected by this move.
  */
-bool Board::MoveTo(int ID, int xto, int yto) {
-  // find and movement
-  if (Find(ID)) {
+bool Board::moveTo(int ID, int xto, int yto) {
+  if (find(ID)) {
+    removeByCoord(xto, yto);
+    std::map<int, Player>::iterator movingPlayer = idBoard.find(ID);
+    coordBoard.erase(movingPlayer->second.getSID());
+    movingPlayer->second.coordUpdate(xto, yto);
+    coordBoard.insert(std::pair<std::string, std::map<int, Player>::iterator>(
+        movingPlayer->second.getSID(), movingPlayer)); // find and movement
+  } else {
+    std::cout << "Player " << ID << "not found." << std::endl;
+    return false;
   }
-  std::cout << "Player " << ID << "not found." << std::endl;
-  return false;
+  return true;
 }
 
 /* PrintByID method in the Board class that prints all the player IDs along
    with their (x,y) positions, in the increasing order of their IDs. Again,
    the print should not display any unoccupied positions.
  */
-void Board::PrintByID() {}
+void Board::printByID() {
+  for (std::map<int, Player>::iterator p = idBoard.begin(); p != idBoard.end();
+       p++) {
+    std::cout << "ID: " << p->second.getID() << " X: " << p->second.getX()
+              << " y: " << p->second.getY() << std::endl;
+  }
+}
+
+void Board::printFancy() {}
