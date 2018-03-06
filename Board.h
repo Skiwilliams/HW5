@@ -6,7 +6,7 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
-#include "player.h"
+#include "Player.h"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -74,19 +74,17 @@ method should print a message to indicate which player was removed. prints when
 player eliminated Returns True on successfull move or displays error and returns
 false
 */
-  bool moveTo(int ID, int xto, int yto);
+  bool MoveTo(int ID, int xto, int yto);
 
   /* PrintByID method in the Board class that prints all the player IDs along
      with their (x,y) positions, in the increasing order of their IDs. Again,
      the print should not display any unoccupied positions.
 */
-  void printByID();
+  void PrintByID();
   void printByVan();
 
   bool checkBounds(int x, int y);
   bool checkValidMove(int x1, int y1, int x2, int y2);
-
-  void printFancy();
 
 private:
   std::map<int, Player> idBoard;
