@@ -1,4 +1,5 @@
-/*Cullen Williams
+/*
+ * Cullen Williams & Garrick Hutcheson
  * Board.cpp
  */
 #include "board.h"
@@ -10,7 +11,6 @@
 Board::Board() {
   boardSize = 10;
   numberOfPlayers = 0;
-  tote = 0;
 }
 
 /* Constructor: Default
@@ -20,7 +20,6 @@ Board::Board(int bS) {
   std::map<int, Player> idBoard;
   boardSize = bS;
   numberOfPlayers = 0;
-  tote = 0;
 }
 
 /*Insert method in the Board class that will allow you to add a new player
@@ -33,14 +32,19 @@ Board::Board(int bS) {
    successful, the method should update n and return true. If insertion fails,
    the code should display an error message and return false without changing
    anything*/
-bool Board::Insert(int x, int y) {
-  int id;
+bool Board::Insert(int id, int x, int y) {
+  if (numberOfPlayers >= boardSize) {
+    std::cout << "Board full" << std::endl;
+    return false;
+  }
+  if (find(id)) {
+    std::cout << "ID " << id << " Taken" << std::endl;
+    return false;
+  }
+
   std::string searchString = intPairToSearchString(x, y);
   // sets player id as a combination of x and y coordinates
-  id = totePlayers();
   if (coordEmpty(x, y)) {
-
-    tote++; // incrementing total players who have played on boardSize
 
     // inserting new player in idBoard and storing return info from insert
     // operation in pair insertInfo
@@ -51,19 +55,10 @@ bool Board::Insert(int x, int y) {
     // string  and iterator to new player stored in idBoard
     coordBoard.insert(std::pair<std::string, std::map<int, Player>::iterator>(
         searchString, insertInfo.first));
+    numberOfPlayers++;
     return true;
   }
   return false;
-}
-
-int Board::totePlayers() { return tote; }
-
-/*
-
- */
-bool Board::Insert(int p, int x, int y) {
-  idBoard.insert(std::pair<int, Player>(p, Player(p, x, y)));
-  return true;
 }
 
 std::string Board::intPairToSearchString(int x, int y) {
@@ -77,7 +72,7 @@ bool Board::coordEmpty(int x, int y) {
   if (coordBoard.find(searchString.c_str()) == coordBoard.end()) {
     return true;
   }
-  std::cout << "no space at: " << searchString.c_str() << std::endl;
+  std::cout << "Can't insert at X: " << x << ",Y: " << y << std::endl;
   return false;
 }
 
@@ -89,14 +84,42 @@ bool Board::coordEmpty(int x, int y) {
    upon  successful  removal,  the corresponding  cell  on  the  board
    should  become  available  for  newer insertions.
  */
-bool Board::Remove() { return false; }
+bool Board::remove(int i) {
+  if (find(i)) {
+    std::map<int, Player>::iterator toDel;
+    toDel = idBoard.find(i);
+    // delete from coordmap
+    coordBoard.erase(toDel->second.getSID());
+    // deletefrom idmap
+    idBoard.erase(i);
+    std::cout << "Player " << i << " removed" << std::endl;
+    numberOfPlayers--;
+    return true;
+  }
+  std::cout << "Player not found" << std::endl;
+  return false;
+}
+
+bool Board::removeByCoord(int x, int y) {
+  std::string moveSID = intPairToSearchString(x, y);
+  std::map<std::string, std::map<int, Player>::iterator>::iterator
+      coordBoardItr = coordBoard.find(moveSID);
+  if (coordBoardItr != coordBoard.end()) // player at new space
+  {
+    idBoard.erase(coordBoardItr->second);
+    coordBoard.erase(coordBoardItr);
+    numberOfPlayers--;
+    return true;
+  }
+
+  return false;
+}
 
 /*Find  method  in  the  Board  class  that  is  given  a  player  ID
    and returns true if the player is found and false otherwise.
  */
-bool Board::Find(int ID) {
-  // uses map to locate player by ID
-  return false;
+bool Board::find(int ID) {
+  return (idBoard.find(ID) == idBoard.end()) ? (false) : (true);
 }
 
 /*MoveTo
@@ -115,11 +138,21 @@ bool Board::Find(int ID) {
    Note: Any player(s) on the board along the path of moving from (x1,y1) to
    (x2,y2) is/are left unaffected by this move.
  */
-bool Board::MoveTo(int ID, int xto, int yto) {
-  // find and movement
-  if (Find(ID)) {
+bool Board::moveTo(int ID, int xto, int yto) {
+  if (find(ID)) {
+    std::map<int, Player>::iterator movingPlayer = idBoard.find(ID);
+    int x1 = movingPlayer->second.getX(), y1 = movingPlayer->second.getY();
+    if (checkValidMove(x1, y1, xto, yto)) {
+      removeByCoord(xto, yto);
+      coordBoard.erase(movingPlayer->second.getSID());
+      movingPlayer->second.coordUpdate(xto, yto);
+      coordBoard.insert(std::pair<std::string, std::map<int, Player>::iterator>(
+          movingPlayer->second.getSID(), movingPlayer)); // find and movement
+      return true;
+    }
   }
-  std::cout << "Player " << ID << "not found." << std::endl;
+  std::cout << "Can't Move Player " << ID << " to " << xto << "," << yto
+            << std::endl;
   return false;
 }
 
@@ -127,4 +160,46 @@ bool Board::MoveTo(int ID, int xto, int yto) {
    with their (x,y) positions, in the increasing order of their IDs. Again,
    the print should not display any unoccupied positions.
  */
-void Board::PrintByID() {}
+void Board::printByID() {
+  for (std::map<int, Player>::iterator p = idBoard.begin(); p != idBoard.end();
+       p++) {
+    std::cout << "ID: " << p->second.getID() << " X: " << p->second.getX()
+              << " y: " << p->second.getY() << std::endl;
+  }
+}
+
+void Board::printByVan() {
+  for (std::map<int, Player>::iterator p = idBoard.begin(); p != idBoard.end();
+       p++) {
+    std::cout << p->second.getName() << "(" << p->second.getID() << ")"
+              << " X: " << p->second.getX() << " y: " << p->second.getY()
+              << std::endl;
+  }
+  std::cout << std::endl;
+}
+
+bool Board::checkBounds(int x, int y) {
+  if ((x > boardSize) || (x <= 0)) {
+    std::cout << "INVALID X" << std::endl;
+    return false;
+  } else if ((y > boardSize) || (y <= 0)) {
+    std::cout << "INVALID Y" << std::endl;
+    return false;
+  } else {
+    return true;
+  }
+}
+bool Board::checkValidMove(int x1, int y1, int x2, int y2) {
+  if (checkBounds(x2, y2)) {
+    if ((abs(x1 - x2) == abs(y1 - y2)) || ((x1 == x2) || (y1 == y2))) {
+      return true;
+    }
+    std::cout << "Cannot move from (" << x1 << " , " << y1 << ") to (" << x2
+              << " , " << y2 << ")" << std::endl;
+    return false;
+  }
+  std::cout << "(" << x2 << " , " << y2 << ") is out of bounds" << std::endl;
+  return false;
+}
+
+void Board::printFancy() {}

@@ -1,5 +1,5 @@
 /*
- *Cullen Williams
+ *Cullen Williams & Garrick Hutcheson
  * Player.h
  */
 
@@ -25,19 +25,21 @@ public:
    */
   Player(int id, int x, int y);
 
-  void coordUpdate();
+  void coordUpdate(int newX, int newY);
 
   void vanityName();
 
-  int returnID();
+  int getID();
 
-  std::string returnName();
+  std::string getSID();
+
+  std::string getName();
 
   /*Passes a copy of the x coordinate*/
-  int returnX();
+  int getX();
 
   /*Passes a copy of the y coordinate*/
-  int returnY();
+  int getY();
 
 private:
   std::string SID;

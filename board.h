@@ -1,5 +1,5 @@
 /*
- *Cullen Williams
+ *Cullen Williams & Garrick Hutcheson
  * Board.h
  */
 
@@ -7,6 +7,7 @@
 #define __BOARD_H__
 
 #include "player.h"
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -34,9 +35,8 @@ public:
   successful, the method should update n and return true. If insertion fails,
    the code should display an error message and return false without changing
     anything*/
-  bool Insert(int x, int y);
 
-  bool Insert(int p, int x, int y);
+  bool Insert(int id, int x, int y);
   /*Implement  a  Remove  method  in  the  Board  class  that  will  allow
     you  to remove  a  player  from  the  board.  The  method  should  take
     as  input  the player ID to be removed, and should return true upon
@@ -45,18 +45,19 @@ public:
     upon  successful  removal,  the corresponding  cell  on  the  board
     should  become  available  for  newer insertions.
 */
-  int totePlayers();
 
   std::string intPairToSearchString(int x, int y);
 
   bool coordEmpty(int x, int y);
 
-  bool Remove();
+  bool remove(int ID);
+
+  bool removeByCoord(int x, int y);
 
   /*Find  method  in  the  Board  class  that  is  given  a  player  ID
 and returns true if the player is found and false otherwise.
 */
-  bool Find(int ID);
+  bool find(int ID);
 
   /*MoveTo
   takes as input a player ID and a destination (x2,y2) cell position.
@@ -73,20 +74,25 @@ method should print a message to indicate which player was removed. prints when
 player eliminated Returns True on successfull move or displays error and returns
 false
 */
-  bool MoveTo(int ID, int xto, int yto);
+  bool moveTo(int ID, int xto, int yto);
 
   /* PrintByID method in the Board class that prints all the player IDs along
      with their (x,y) positions, in the increasing order of their IDs. Again,
      the print should not display any unoccupied positions.
 */
-  void PrintByID();
+  void printByID();
+  void printByVan();
+
+  bool checkBounds(int x, int y);
+  bool checkValidMove(int x1, int y1, int x2, int y2);
+
+  void printFancy();
 
 private:
   std::map<int, Player> idBoard;
   std::map<std::string, std::map<int, Player>::iterator> coordBoard;
   int boardSize;
   int numberOfPlayers;
-  int tote;
 };
 
 #endif
