@@ -2,7 +2,7 @@
  * Cullen Williams & Garrick Hutcheson
  * Board.cpp
  */
-#include "board.h"
+#include "Board.h"
 #include <iostream>
 
 /* Constructor: Default
@@ -85,9 +85,9 @@ bool Board::coordEmpty(int x, int y) {
    should  become  available  for  newer insertions.
  */
 bool Board::remove(int i) {
-  if (find(i)) {
-    std::map<int, Player>::iterator toDel;
-    toDel = idBoard.find(i);
+  std::map<int, Player>::iterator toDel;
+  toDel = idBoard.find(i);
+  if (toDel != idBoard.end()) {
     // delete from coordmap
     coordBoard.erase(toDel->second.getSID());
     // deletefrom idmap
@@ -138,9 +138,9 @@ bool Board::find(int ID) {
    Note: Any player(s) on the board along the path of moving from (x1,y1) to
    (x2,y2) is/are left unaffected by this move.
  */
-bool Board::moveTo(int ID, int xto, int yto) {
-  if (find(ID)) {
-    std::map<int, Player>::iterator movingPlayer = idBoard.find(ID);
+bool Board::MoveTo(int ID, int xto, int yto) {
+  std::map<int, Player>::iterator movingPlayer = idBoard.find(ID);
+  if (movingPlayer != idBoard.end()) {
     int x1 = movingPlayer->second.getX(), y1 = movingPlayer->second.getY();
     if (checkValidMove(x1, y1, xto, yto)) {
       removeByCoord(xto, yto);
@@ -160,12 +160,13 @@ bool Board::moveTo(int ID, int xto, int yto) {
    with their (x,y) positions, in the increasing order of their IDs. Again,
    the print should not display any unoccupied positions.
  */
-void Board::printByID() {
+void Board::PrintByID() {
   for (std::map<int, Player>::iterator p = idBoard.begin(); p != idBoard.end();
        p++) {
     std::cout << "ID: " << p->second.getID() << " X: " << p->second.getX()
               << " y: " << p->second.getY() << std::endl;
   }
+  std::cout << std::endl;
 }
 
 void Board::printByVan() {
@@ -201,5 +202,3 @@ bool Board::checkValidMove(int x1, int y1, int x2, int y2) {
   std::cout << "(" << x2 << " , " << y2 << ") is out of bounds" << std::endl;
   return false;
 }
-
-void Board::printFancy() {}

@@ -1,0 +1,56 @@
+ID 3 Taken
+Can't insert at X: 9,Y: 8
+ID: 1 X: 3 y: 2
+ID: 2 X: 4 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 9 y: 3
+ID: 5 X: 6 y: 3
+ID: 6 X: 8 y: 2
+ID: 8 X: 9 y: 8
+
+ID: 1 X: 3 y: 2
+ID: 2 X: 4 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 9 y: 8
+ID: 5 X: 6 y: 3
+ID: 6 X: 8 y: 2
+
+Cannot move from (9 , 8) to (6 , 3)
+Can't Move Player 4 to 6,3
+ID: 1 X: 3 y: 2
+ID: 2 X: 4 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 9 y: 8
+ID: 5 X: 6 y: 3
+ID: 6 X: 8 y: 2
+
+ID: 1 X: 3 y: 2
+ID: 2 X: 3 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 9 y: 8
+ID: 5 X: 6 y: 3
+ID: 6 X: 8 y: 2
+
+ID: 2 X: 3 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 3 y: 2
+ID: 5 X: 6 y: 3
+ID: 6 X: 8 y: 2
+
+ID: 2 X: 3 y: 3
+ID: 3 X: 4 y: 6
+ID: 4 X: 8 y: 2
+ID: 5 X: 6 y: 3
+
+ID: 3 X: 4 y: 6
+ID: 4 X: 8 y: 2
+ID: 5 X: 3 y: 3
+
+ID: 4 X: 4 y: 6
+ID: 5 X: 3 y: 3
+
+ID: 4 X: 4 y: 6
+ID: 5 X: 4 y: 3
+
+ID: 4 X: 4 y: 3
+

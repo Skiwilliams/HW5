@@ -2,7 +2,7 @@
  *Cullen Williams & Garrick Hutcheson
  * Player.cpp
  */
-#include "player.h"
+#include "Player.h"
 
 #include <cstdlib>
 #include <ctime>
