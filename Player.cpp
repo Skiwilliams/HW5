@@ -34,7 +34,7 @@ Player::Player(int id, int x, int y) {
 // gives players usless but fun names
 void Player::vanityName() {
   std::string inname = "";
-  int rand = clock() % 21;
+  int rand = clock() % 23;
   std::ifstream fin;
   fin.open("Names.txt");
   for (int i = 0; i <= rand; i++) {
