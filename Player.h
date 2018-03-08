@@ -1,5 +1,5 @@
 /*
- *Cullen Williams & Garrick Hutcheson
+   *Cullen Williams & Garrick Hutcheson
  * Player.h
  */
 
@@ -17,36 +17,41 @@
 class Player {
 
 public:
-  /* Constructor: the empty one
-   */
-  Player();
+/* Constructor: the empty one
+ */
+Player();
 
-  /* Constructor: the not empty one
-   */
-  Player(int id, int x, int y);
+/* Constructor: the not empty one
+ */
+Player(int id, int x, int y);
 
-  void coordUpdate(int newX, int newY);
+// mutates x y and SID to newX and newY passed as arguments
+void coordUpdate(int newX, int newY);
 
-  void vanityName();
+// makes useless but fun names for each player
+void vanityName();
 
-  int getID();
+// returns player ID for idBoard
+int getID();
 
-  std::string getSID();
+// returns player SID for coordBoard
+std::string getSID();
 
-  std::string getName();
+// returns the vanity name of a player
+std::string getName();
 
-  /*Passes a copy of the x coordinate*/
-  int getX();
+/*Passes a copy of the x coordinate*/
+int getX();
 
-  /*Passes a copy of the y coordinate*/
-  int getY();
+/*Passes a copy of the y coordinate*/
+int getY();
 
 private:
-  std::string SID;
-  int ID;
-  std::string name;
-  int posx;
-  int posy;
+std::string SID;
+int ID;
+std::string name;
+int posx;
+int posy;
 };
 
 #endif
